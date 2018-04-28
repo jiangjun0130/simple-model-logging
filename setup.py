@@ -1,7 +1,7 @@
 from setuptools import find_packages, setup
 
 
-version = '1.0.6'
+version = '1.0.8'
 
 
 # install_requires={
@@ -17,7 +17,7 @@ setup(
     long_description=open('README.md').read(),
     author='Jason Jiang',
     author_email='jiangjun0130@aliyun.com',
-    url='https://github.com/jiangjun0130/simple_model_logging',
+    url='https://github.com/jiangjun0130/simple-model-logging',
     # install_requires=install_requires,
     extras_require={},
     zip_safe=False,

@@ -5,7 +5,7 @@ from django.db import models
 
 
 def get_model_class(model):
-    """Return the qualified path to a model class: 'model_logging.models.LogEntry'."""
+    """Return the qualified path to a model class"""
     return '{}.{}'.format(model.__module__, model.__qualname__)
 
 
@@ -81,11 +81,3 @@ class SystemUserLog(models.Model):
         verbose_name = "用户修改数据日志"
         verbose_name_plural = verbose_name
 
-
-class Person(models.Model):
-
-    """
-    测试model
-    """
-    name = models.CharField('姓名', max_length=16)
-    age = models.IntegerField('年龄', default=18)

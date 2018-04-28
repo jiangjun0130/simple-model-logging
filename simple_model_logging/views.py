@@ -106,9 +106,18 @@ class SystemUserLogViewMixin(SystemUserLogMethodMixin):
         :param model_class:
         :return:
         """
-        log_list = SystemUserLog.objects.filter(model_id=model_id, model_class=model_class,
+        model_qualified_path = '{}.{}'.format(model_class.__module__, model_class.__qualname__)
+        log_list = SystemUserLog.objects.filter(model_id=model_id, model_class=model_qualified_path,
                                                 operation=SystemUserLog.OPERATION_ADD)
         if log_list is not None:
             return log_list[0].model_create_user_id
         else:
             return None
+
+    def get_create_model_user(self, user_id):
+        """
+        获取model创建用户。子类需要重写该方法
+        :param user_id:
+        :return:
+        """
+        raise NotImplementedError
