@@ -1,0 +1,11 @@
+setup.py
+simple-model-logging/__init__.py
+simple-model-logging/json_utils.py
+simple-model-logging/models.py
+simple-model-logging/test.py
+simple-model-logging/views.py
+simple_model_logging.egg-info/PKG-INFO
+simple_model_logging.egg-info/SOURCES.txt
+simple_model_logging.egg-info/dependency_links.txt
+simple_model_logging.egg-info/not-zip-safe
+simple_model_logging.egg-info/top_level.txt

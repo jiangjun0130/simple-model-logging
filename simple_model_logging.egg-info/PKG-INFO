@@ -1,0 +1,21 @@
+Metadata-Version: 1.1
+Name: simple-model-logging
+Version: 1.0.0
+Summary: 基于django 2.0.4的model修改日志
+Home-page: https://github.com/jiangjun0130/simple-model-logging
+Author: Jason Jiang
+Author-email: jiangjun0130@aliyun.com
+License: BSD
+Description: UNKNOWN
+Platform: UNKNOWN
+Classifier: Development Status :: 5 - Production/Stable
+Classifier: Framework :: Django
+Classifier: Intended Audience :: Developers
+Classifier: License :: OSI Approved :: BSD License
+Classifier: Natural Language :: English
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3.4
+Classifier: Programming Language :: Python :: 3.5
+Classifier: Programming Language :: Python :: 3.6
+Classifier: Programming Language :: Python :: 3 :: Only
+Classifier: Topic :: Software Development :: Libraries
