@@ -95,7 +95,7 @@ class SystemUserLogViewMixin(SystemUserLogMethodMixin):
         :param model_id:
         :return:
         """
-        super(SystemUserLogViewMixin, self).log_on_update(model_class=model_class, json_data=json_data,
+        super(SystemUserLogViewMixin, self).log_on_delete(model_class=model_class, json_data=json_data,
                                                           model_create_user=model_create_user,
                                                           model_update_user=self.request.user, model_id=model_id)
 

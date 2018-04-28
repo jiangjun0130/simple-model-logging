@@ -1,7 +1,7 @@
 from setuptools import find_packages, setup
 
 
-version = '1.0.0'
+version = '1.0.6'
 
 
 # install_requires={
@@ -10,14 +10,14 @@ version = '1.0.0'
 
 setup(
     name='simple-model-logging',
-    packages=find_packages(),
+    packages=['simple_model_logging'],
     include_package_data=True,
     version=version,
     description='基于django 2.0.4的model修改日志',
     long_description=open('README.md').read(),
     author='Jason Jiang',
     author_email='jiangjun0130@aliyun.com',
-    url='https://github.com/jiangjun0130/simple-model-logging',
+    url='https://github.com/jiangjun0130/simple_model_logging',
     # install_requires=install_requires,
     extras_require={},
     zip_safe=False,
