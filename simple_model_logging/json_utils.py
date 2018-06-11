@@ -9,7 +9,7 @@ import logging
 # from utils.common_enum import ReturnEnum
 # from utils.response import ResponseData
 
-from utils.DateEncoder import DateEncoder
+from .date_encoder import DateEncoder
 
 # Get an instance of a logger
 logger = logging.getLogger('django')
@@ -17,52 +17,23 @@ logger = logging.getLogger('django')
 
 class JsonUtils:
 
-    @staticmethod
-    def row_2_dict(row):
-        d = {}
-        for column in row.__table__.columns:
-            d[column.name] = str(getattr(row, column.name))
-        return d
-
-    @staticmethod
     def obj_2_json_str(obj):
         """
         对象转换为json字符串
         :return:
         """
-        json_str = ''
+        if not obj:
+            return ''
+        dic_data = {}
         try:
-            dic_data = obj.__dict__
-            if dic_data.get('_state') is not None:
-                dic_data.pop('_state')
+            dic_data.update(obj.__dict__)
+            dic_data.pop('_state', None)
             json_str = json.dumps(dic_data, ensure_ascii=False, cls=DateEncoder)
+            return json_str
         except Exception as e:
-            logger.error("转换json异常！", e)
+            print("error", e)
+            raise e
 
-        return json_str
-
-    @staticmethod
-    def json_str_2_dict(json_str):
-        """
-        json字符串转换为对象
-        :return:
-        """
-        dict_data = json.loads(json_str, encoding='utf-8')
-        return dict_data
-
-
-# response_data = ResponseData(ReturnEnum.ERROR.value, '指定流程阶段不存在！')
-#
-# json_str = JsonUtils.obj_2_json_str(response_data)
-# print(json_str)
-#
-# response = JsonUtils.json_str_2_obj(json_str)
-# print(type(response))
-# print(response)
-#
-# class_obj = ResponseData(response)
-# print(type(class_obj))
-# print(class_obj)
 
 # from datetime import datetime
 # from datetime import date

@@ -38,6 +38,17 @@ class SystemUserLogManager(models.Manager):
         """
         return self.filter(model_update_user=model_update_user, model_class=get_model_class(model_class))
 
+    def get_model_create_user(self, model_class, model_id):
+        """
+        获取创建记录的用户
+        :param model_class:
+        :return:
+        """
+        try:
+            return self.get(model_class=get_model_class(model_class), operation='add', model_id=model_id)
+        except:
+            return None
+
 
 class SystemUserLog(models.Model):
     """

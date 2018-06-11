@@ -10,50 +10,68 @@ Add `simple-model-logging` to your `INSTALLED_APPS`.
 
 #### Low-level use
 
-from .views import SystemUserLogViewMixin
-from .json_utils import JsonUtils
+from datetime import datetime
+
+from django.db import models
+
+from .simple_model_logging import SystemUserLogMixin
 
 
-class View:
+class AbstractModel(models.Model):
     """
-    placeholder for from django.views.generic import View
+    base model
+    """
+    STATUS_TYPE = (
+        ('1', 'NORMAL'),
+        ('2', 'DELETE'),
+        ('3', 'DISABLE')
+    )
+    create_time = models.DateTimeField('create_time', default=datetime.now)
+    update_time = models.DateTimeField('update_time', default=datetime.now)
+    update_time = models.DateTimeField('update_time', default=None, null=True, blank=True)
+    data_status = models.CharField('data_status', max_length=1, choices=STATUS_TYPE, default='1')
+
+    def delete(self, using=None, keep_parents=False):
+        # logging delete
+        SystemUserLogMixin.log_delete(self)
+
+        # override delete method
+        self.delete_time = datetime.now()
+        self.data_status = '2'
+        self.save()
+
+        def save(self, *args, **kw):
+        log = SystemUserLogMixin()
+        is_insert = False
+        if self.id:
+            # update
+            print('update model')
+            # logging update
+            log.log_update(model=self)
+        else:
+            # insert
+            # set insert signal
+            is_insert = True
+            print('insert model')
+
+        super(AbstractModel, self).save(*args, **kw)
+        if is_insert:
+            # logging insert
+            # this code can get the record id
+            log.log_create(model=self)
+
+    def create(self, *args, **kw):
+        log = SystemUserLogMixin()
+        super(AbstractModel, self).create(*args, **kw)
+        log.log_create(model=self)
+
+    class Meta:
+        abstract = True
+
+
+class Person(AbstractModel):
+    """
+    bussiness model extends from AbstractModel.
+    when invoke the model's save(),create(),delete() method will do logging
     """
     pass
-
-
-class Person:
-    """
-    placeholder for models
-    """
-    pass
-
-
-class TestLogView(View, SystemUserLogViewMixin):
-
-    def get_create_model_user(self, user_id):
-        """
-        return model create user
-        :param user_id:  create_user_id
-        :return:
-        """
-        pass
-
-    def get(self, request):
-        person = Person()
-        person.name = 'Tom'
-        person.save()
-        # log to create model
-        super(TestLogView, self).log_create(model_class=Person, json_data=JsonUtils.obj_2_json_str(person),
-                                            model_id=person.id)
-        person.age = 20
-        person.save()
-        create_user_id = super(TestLogView, self).get_create_model_user_id(model_id=person.id, model_class=Person)
-        model_create_user = self.get_create_model_user(create_user_id)
-
-        # log to update model
-        super(TestLogView, self).log_update(model_class=Person, json_data=JsonUtils.obj_2_json_str(person),
-                                            model_create_user=model_create_user, model_id=person.id)
-
-        # log to delete model
-        super(TestLogView, self).log_delete(model_class=Person, json_data=JsonUtils.obj_2_json_str(person),
-                                            model_create_user=model_create_user, model_id=person.id)
