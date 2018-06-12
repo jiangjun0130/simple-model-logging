@@ -1,7 +1,7 @@
 from setuptools import find_packages, setup
 
 
-version = '1.1.0'
+version = '1.1.2'
 
 
 # install_requires={
@@ -13,7 +13,7 @@ setup(
     packages=['simple_model_logging'],
     include_package_data=True,
     version=version,
-    description='基于django 2.0.4的model修改日志',
+    description='Based Django 2.0.4  to logging update',
     long_description=open('README.md').read(),
     author='Jason Jiang',
     author_email='jiangjun0130@aliyun.com',
