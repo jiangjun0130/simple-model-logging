@@ -30,7 +30,7 @@ class AbstractModel(models.Model):
     create_time = models.DateTimeField('create_time', default=datetime.now)
     update_time = models.DateTimeField('update_time', default=datetime.now)
     update_time = models.DateTimeField('update_time', default=None, null=True, blank=True)
-    update_time = models.CharField('update_time', max_length=1, choices=STATUS_TYPE, default='1')
+    update_status = models.CharField('update_status', max_length=1, choices=STATUS_TYPE, default='1')
 
     def model_2_dict(self):
         """
