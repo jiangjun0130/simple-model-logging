@@ -22,25 +22,32 @@ class AbstractModel(models.Model):
     base model
     """
     STATUS_TYPE = (
-        ('1', 'NORMAL'),
-        ('2', 'DELETE'),
-        ('3', 'DISABLE')
+        ('1', 'normal'),
+        ('2', 'delete'),
+        ('3', 'disable')
     )
     create_time = models.DateTimeField('create_time', default=datetime.now)
     update_time = models.DateTimeField('update_time', default=datetime.now)
     update_time = models.DateTimeField('update_time', default=None, null=True, blank=True)
-    data_status = models.CharField('data_status', max_length=1, choices=STATUS_TYPE, default='1')
+    update_time = models.CharField('update_time', max_length=1, choices=STATUS_TYPE, default='1')
 
-    def delete(self, using=None, keep_parents=False):
+    def model_2_dict(self):
+        """
+        model to dict
+        :return:
+        """
+        return dict([(attr, getattr(self, attr)) for attr in [field.name for field in self._meta.fields]])
+
+    def delete(self, *args, **kw):
         # logging delete
-        SystemUserLogMixin.log_delete(self)
+        SystemUserLogMixin().log_delete(model=self)
 
         # override delete method
         self.delete_time = datetime.now()
         self.data_status = '2'
-        self.save()
+        super().save(*args, **kw)
 
-        def save(self, *args, **kw):
+    def save(self, *args, **kw):
         log = SystemUserLogMixin()
         is_insert = False
         if self.id:
@@ -54,7 +61,7 @@ class AbstractModel(models.Model):
             is_insert = True
             print('insert model')
 
-        super(AbstractModel, self).save(*args, **kw)
+        super().save(*args, **kw)
         if is_insert:
             # logging insert
             # this code can get the record id
@@ -62,7 +69,7 @@ class AbstractModel(models.Model):
 
     def create(self, *args, **kw):
         log = SystemUserLogMixin()
-        super(AbstractModel, self).create(*args, **kw)
+        super().create(*args, **kw)
         log.log_create(model=self)
 
     class Meta:

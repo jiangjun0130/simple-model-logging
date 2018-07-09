@@ -31,8 +31,8 @@ class JsonUtils:
             json_str = json.dumps(dic_data, ensure_ascii=False, cls=DateEncoder)
             return json_str
         except Exception as e:
-            print("error", e)
-            raise e
+            print("obj_2_json_str error", e)
+            return ''
 
 
 # from datetime import datetime

@@ -30,3 +30,4 @@ class DateEncoder(json.JSONEncoder):
                 return json.JSONEncoder.default(self, o)
         except Exception as e:
             logger.error('JSONEncoder error: %s' % e)
+            return None
