@@ -10,6 +10,7 @@ Add `simple-model-logging` to your `INSTALLED_APPS`.
 
 #### Low-level use
 
+```
 from datetime import datetime
 
 from django.db import models
@@ -82,3 +83,5 @@ class Person(AbstractModel):
     when invoke the model's save(),create(),delete() method will do logging
     """
     pass
+
+```
